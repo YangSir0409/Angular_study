@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+		<title>webapp</title>
+		<link rel="stylesheet" href="/css/index.css" />
+	</head>
+	<body ng-app="app">
+		<div ui-view>
+			
+		</div>
+		<script>
+			document.getElementsByTagName('html')[0].style.fontSize = window.screen.width / 10 + 'px';
+		</script>
+		<script src="vendor/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="vendor/angular-ui-router/release/angular-ui-router.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/index.js"></script>
+	</body>
+</html>
