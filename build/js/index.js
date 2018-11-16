@@ -3,6 +3,41 @@
 angular.module('app',['ui.router']);
 
 'use strict';
+angular.module('app').controller('companyCtrl',['$scope',function($scope){
+	
+}]);
+
+'use strict';
+angular.module('app').controller('mainCtrl',['$http','$scope',function($http,$scope){
+	$http.get('/data/positionList.json').success(function(resp){
+		$scope.list = resp;
+	});
+}]);
+
+'use strict';
+angular.module('app').controller('positionCtrl',['$q','$http','$state','$scope',function($q,$http,$state,$scope){
+	$scope.isLogin = false;
+	function getPosition(){
+		var def = $q.defer();
+		$http.get("/data/position.json?id=" + $state.params.id).success(function(resp){
+			$scope.position = resp;
+			def.resolve(resp);
+		}).error(function(err){
+			def.reject(err);
+		});
+		return def.promise;
+	}
+	function getCompany(id){
+		$http.get('/data/company.json?id=' + id).success(function(resp){
+			$scope.company = resp;
+		})
+	}
+	getPosition().then(function(obj){
+		getCompany(obj.companyId);
+	});
+}]);
+
+'use strict';
 
 angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
 	$stateProvider.state('main',{
@@ -13,6 +48,10 @@ angular.module('app').config(['$stateProvider','$urlRouterProvider',function($st
 		url:'/position/:id',
 		templateUrl:'view/position.html',
 		controller:'positionCtrl'
+	}).state('company',{
+		url:'/company/:id',
+		templateUrl:'view/company.html',
+		controller:'companyCtrl'
 	});
 	$urlRouterProvider.otherwise('main')
 }])
@@ -22,6 +61,9 @@ angular.module('app').directive('appCompany',[function(){
 	return{
 		restrict:'A',
 		replace: true,
+		scope:{
+			com: '='
+		},
 		templateUrl:'view/template/company.html'
 	};
 }]);
@@ -64,13 +106,25 @@ angular.module('app').directive('appHeadBar',[function(){
 
 'use strict';
 
+angular.module('app').directive('appPositionClass',[function(){
+	return{
+		restrict: 'A',
+		replace: true,
+		templateUrl: 'view/template/positionClass.html'
+	}
+}])
+
+'use strict';
+
 angular.module('app').directive('appPositionInfo',[function(){
 	return{
 		restrict: "A",
 		replace: true,
 		templateUrl: 'view/template/positionInfo.html',
 		scope:{
-			isActive: '='
+			isActive: '=',
+			isLogin: '=',
+			pos: '='
 		},
 		link:function($scope){
 			$scope.imagePath = $scope.isActive?'image/star-active.png':'image/star.png';
@@ -90,30 +144,3 @@ angular.module('app').directive('appPositionList',[function(){
 		}
 	}
 }])
-
-'use strict';
-angular.module('app').controller('mainCtrl',['$scope',function($scope){
-	$scope.list = [{
-		id: '1',
-		name: '销售',
-		imgSrc: 'image/company-3.png',
-		companyName: '千度',
-		city: '上海',
-		industry: '互联网',
-		time: '2016-06-01 11:05'
-	},
-	{
-		id: '2',
-		name: 'web前端',
-		imgSrc: 'image/company-1.png',
-		companyName: '慕课网',
-		city: '北京',
-		industry: '互联网',
-		time: '2016-06-01 01:05'
-	}];
-}]);
-
-'use strict';
-angular.module('app').controller('positionCtrl',['$scope',function($scope){
-	
-}]);
