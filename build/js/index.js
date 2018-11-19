@@ -3,8 +3,29 @@
 angular.module('app',['ui.router']);
 
 'use strict';
-angular.module('app').controller('companyCtrl',['$scope',function($scope){
-	
+
+angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+	$stateProvider.state('main',{
+		url:'/main',
+		templateUrl:'view/main.html',
+		controller:'mainCtrl'
+	}).state('position',{
+		url:'/position/:id',
+		templateUrl:'view/position.html',
+		controller:'positionCtrl'
+	}).state('company',{
+		url:'/company/:id',
+		templateUrl:'view/company.html',
+		controller:'companyCtrl'
+	});
+	$urlRouterProvider.otherwise('main')
+}])
+
+'use strict';
+angular.module('app').controller('companyCtrl',['$http','$state','$scope',function($http,$state,$scope){
+	$http.get("/data/company.json?id=" + $state.params.id).success(function(resp){
+		$scope.company = resp;
+	})
 }]);
 
 'use strict';
@@ -36,25 +57,6 @@ angular.module('app').controller('positionCtrl',['$q','$http','$state','$scope',
 		getCompany(obj.companyId);
 	});
 }]);
-
-'use strict';
-
-angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
-	$stateProvider.state('main',{
-		url:'/main',
-		templateUrl:'view/main.html',
-		controller:'mainCtrl'
-	}).state('position',{
-		url:'/position/:id',
-		templateUrl:'view/position.html',
-		controller:'positionCtrl'
-	}).state('company',{
-		url:'/company/:id',
-		templateUrl:'view/company.html',
-		controller:'companyCtrl'
-	});
-	$urlRouterProvider.otherwise('main')
-}])
 
 'use strict';
 angular.module('app').directive('appCompany',[function(){
@@ -110,7 +112,21 @@ angular.module('app').directive('appPositionClass',[function(){
 	return{
 		restrict: 'A',
 		replace: true,
-		templateUrl: 'view/template/positionClass.html'
+		scope:{
+			com: '='
+		},
+		templateUrl: 'view/template/positionClass.html',
+		link: function($scope){
+			$scope.showPositionList = function(idx){
+				$scope.positionList = $scope.com.positionClass[idx].positionList;
+				$scope.isActive = idx;
+			}
+			$scope.$watch('com',function(newVal){
+				if(newVal){
+					$scope.showPositionList(0);
+				}
+			})
+		}
 	}
 }])
 
