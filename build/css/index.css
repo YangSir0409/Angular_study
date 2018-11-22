@@ -208,6 +208,7 @@
   position: fixed;
   left: 0;
   right: 0;
+  top: 0;
   height: 1.06666667rem;
   line-height: 1.06666667rem;
 }
@@ -238,6 +239,9 @@
   padding-left: 20px;
   margin-left: 10px;
 }
+.search-list {
+  margin-top: 2.13333333rem;
+}
 .tab {
   background-color: #f7f7f7;
   position: fixed;
@@ -258,6 +262,46 @@
 }
 .tab li.active {
   border-bottom: 2px solid #12d5b5;
+}
+.sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 99;
+}
+.sheet .wrap {
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  z-index: 100;
+}
+.sheet .wrap li,
+.sheet .wrap button {
+  color: #1063e5;
+  background-color: #f1f2f3;
+  font-size: 0.42666667rem;
+  height: 1.33333333rem;
+  line-height: 1.33333333rem;
+  width: 100%;
+}
+.sheet .wrap button {
+  border-radius: 5px;
+  margin-top: 8px;
+}
+.sheet .wrap ul {
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  max-height: 500px;
+}
+.sheet .wrap ul li {
+  list-style: none;
+  border-bottom: 1px solid #d4d4d4;
 }
 html,
 body {
