@@ -3,6 +3,62 @@
 angular.module('app',['ui.router']);
 
 'use strict';
+angular.module('app').value('dict',{}).run(['dict','$http',function(dict,$http){
+	$http.get('data/city.json').success(function(resp){
+		dict.city = resp;
+	})
+	$http.get('data/salary.json').success(function(resp){
+		dict.salary = resp;
+	})
+	$http.get('data/scale.json').success(function(resp){
+		dict.scale = resp;
+	})
+}])
+
+'use strict';
+
+angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+	$stateProvider.state('main',{
+		url:'/main',
+		templateUrl:'view/main.html',
+		controller:'mainCtrl'
+	}).state('position',{
+		url:'/position/:id',
+		templateUrl:'view/position.html',
+		controller:'positionCtrl'
+	}).state('company',{
+		url:'/company/:id',
+		templateUrl:'view/company.html',
+		controller:'companyCtrl'
+	}).state('search',{
+		url:'/search',
+		templateUrl:'view/search.html',
+		controller:'searchCtrl'
+	}).state('login',{
+		url:'/login',
+		templateUrl:'view/login.html',
+		controller:'loginCtrl'
+	}).state('register',{
+		url:'/register',
+		templateUrl:'view/register.html',
+		controller:'registerCtrl'
+	}).state('me',{
+		url:'/me',
+		templateUrl:'view/me.html',
+		controller:'meCtrl'
+	}).state('post',{
+		url:'/post',
+		templateUrl:'view/post.html',
+		controller:'postCtrl'
+	}).state('favorite',{
+		url:'/favorite',
+		templateUrl:'view/favorite.html',
+		controller:'favoriteCtrl'
+	});
+	$urlRouterProvider.otherwise('main')
+}])
+
+'use strict';
 angular.module('app').controller('companyCtrl',['$http','$state','$scope',function($http,$state,$scope){
 	$http.get("/data/company.json?id=" + $state.params.id).success(function(resp){
 		$scope.company = resp;
@@ -10,10 +66,25 @@ angular.module('app').controller('companyCtrl',['$http','$state','$scope',functi
 }]);
 
 'use strict';
+angular.module('app').controller('favoriteCtrl',['$http','$scope',function($http,$scope){
+
+}]);
+
+'use strict';
+angular.module('app').controller('loginCtrl',['$http','$scope',function($http,$scope){
+
+}]);
+
+'use strict';
 angular.module('app').controller('mainCtrl',['$http','$scope',function($http,$scope){
 	$http.get('/data/positionList.json').success(function(resp){
 		$scope.list = resp;
 	});
+}]);
+
+'use strict';
+angular.module('app').controller('meCtrl',['$http','$scope',function($http,$scope){
+
 }]);
 
 'use strict';
@@ -37,6 +108,16 @@ angular.module('app').controller('positionCtrl',['$q','$http','$state','$scope',
 	getPosition().then(function(obj){
 		getCompany(obj.companyId);
 	});
+}]);
+
+'use strict';
+angular.module('app').controller('postCtrl',['$http','$scope',function($http,$scope){
+
+}]);
+
+'use strict';
+angular.module('app').controller('registerCtrl',['$http','$scope',function($http,$scope){
+
 }]);
 
 'use strict';
@@ -95,42 +176,6 @@ angular.module('app').controller('searchCtrl',['dict','$http','$scope',function(
 		}
 	}
 }]);
-
-'use strict';
-angular.module('app').value('dict',{}).run(['dict','$http',function(dict,$http){
-	$http.get('data/city.json').success(function(resp){
-		dict.city = resp;
-	})
-	$http.get('data/salary.json').success(function(resp){
-		dict.salary = resp;
-	})
-	$http.get('data/scale.json').success(function(resp){
-		dict.scale = resp;
-	})
-}])
-
-'use strict';
-
-angular.module('app').config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
-	$stateProvider.state('main',{
-		url:'/main',
-		templateUrl:'view/main.html',
-		controller:'mainCtrl'
-	}).state('position',{
-		url:'/position/:id',
-		templateUrl:'view/position.html',
-		controller:'positionCtrl'
-	}).state('company',{
-		url:'/company/:id',
-		templateUrl:'view/company.html',
-		controller:'companyCtrl'
-	}).state('search',{
-		url:'/search',
-		templateUrl:'view/search.html',
-		controller:'searchCtrl'
-	});
-	$urlRouterProvider.otherwise('main')
-}])
 
 'use strict';
 angular.module('app').directive('appCompany',[function(){
