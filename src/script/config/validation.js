@@ -1,7 +1,7 @@
 'use strict';
 angular.module('app').config(['$validationProvider',function($validationProvider){
 	var expression = {
-		phone: /^1[\d]{10}/,
+		phone: /^1[\d]{10}$/,
 		password:function(value){
 			var str = value + ''
 			return str.length >5;

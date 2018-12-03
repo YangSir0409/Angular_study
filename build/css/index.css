@@ -78,6 +78,20 @@
 .position-list .item .text {
   margin: 0;
 }
+.position-list .item .icon {
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 0.8rem;
+  height: 0.74666667rem;
+  top: 14px;
+  right: 12px;
+}
+.position-list .item .icon.star {
+  background-image: url(../image/star.png);
+}
+.position-list .item .icon.star-acitve {
+  background-image: url(../image/star-active.png);
+}
 .bg-w {
   background: #fff;
 }
@@ -316,6 +330,18 @@
 .login form {
   margin-top: 6.93333333rem;
 }
+.login form .ng-invalid + span {
+  position: absolute;
+  color: red;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  text-align: right;
+  font-size: 12px;
+}
+.login form .ng-invalid + span p {
+  margin: 0;
+}
 .login form .form-line {
   margin-left: auto;
   margin-right: auto;
@@ -329,7 +355,7 @@
 .login form .form-line:first-child {
   border-bottom: 1px solid #fff;
 }
-.login form .form-line span {
+.login form .form-line .icon {
   background-repeat: no-repeat;
   background-color: rgba(0, 0, 0, 0.4);
   background-position: 18px 10px;
@@ -348,6 +374,7 @@
   outline-width: 0;
   height: 100%;
   box-sizing: border-box;
+  color: #fff;
   width: 6.53333333rem;
   font-size: 0.37333333rem;
   padding-left: 0.8rem;
@@ -494,6 +521,14 @@
 .me .name {
   margin-top: 0.66666667rem;
 }
+.me .login-btn {
+  background-color: #12d5b5;
+  width: 9.06666667rem;
+  height: 1.06666667rem;
+  margin-top: 8rem;
+  color: #fff;
+  font-size: 0.42666667rem;
+}
 .me .btns {
   margin-top: 1.06666667rem;
 }
@@ -512,6 +547,9 @@
   height: 1.06666667rem;
   margin-top: 0.53333333rem;
 }
+.my-post {
+  margin-top: 1.06666667rem;
+}
 html,
 body {
   height: 100%;
@@ -525,4 +563,30 @@ body {
 button {
   outline-width: 0;
   border-width: 0;
+}
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
 }
